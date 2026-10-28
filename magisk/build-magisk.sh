@@ -30,6 +30,10 @@ description=Per-app touch game mode, super report rate, tuning and panel orienta
 EOF
 
 cat > "$BUILD/sepolicy.rule" <<'EOF'
+allow platform_app hal_touchfeature_xiaomi_service service_manager find
+allow platform_app hal_touchfeature_xiaomi_default binder { call transfer }
+allow hal_touchfeature_xiaomi_default platform_app binder { call transfer }
+allow hal_touchfeature_xiaomi_default platform_app fd use
 allow platform_app_36 hal_touchfeature_xiaomi_service service_manager find
 allow platform_app_36 hal_touchfeature_xiaomi_default binder { call transfer }
 allow hal_touchfeature_xiaomi_default platform_app_36 binder { call transfer }
@@ -38,6 +42,7 @@ allow priv_app hal_touchfeature_xiaomi_service service_manager find
 allow priv_app hal_touchfeature_xiaomi_default binder { call transfer }
 allow hal_touchfeature_xiaomi_default priv_app binder { call transfer }
 allow hal_touchfeature_xiaomi_default priv_app fd use
+allow platform_app vendor_sysfs_touch file { ioctl read write getattr lock append map open watch watch_reads }
 allow platform_app_36 vendor_sysfs_touch file { ioctl read write getattr lock append map open watch watch_reads }
 allow priv_app vendor_sysfs_touch file { ioctl read write getattr lock append map open watch watch_reads }
 typeattribute vendor_sysfs_touch mlstrustedobject
